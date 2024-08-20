@@ -538,6 +538,7 @@
             // 
             // cbendereco
             // 
+            this.cbendereco.DisplayMember = "endereco";
             this.cbendereco.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbendereco.FormattingEnabled = true;
             this.cbendereco.Location = new System.Drawing.Point(175, 304);
@@ -752,7 +753,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtid;
         private System.Windows.Forms.TextBox txtnome;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.MaskedTextBox txtdoc;
@@ -782,6 +782,7 @@
         private System.Windows.Forms.Button btsair;
         private System.Windows.Forms.Button btnovo;
         private System.Windows.Forms.Button btsalvar;
+        public System.Windows.Forms.TextBox txtid;
     }
 }
 
