@@ -538,6 +538,8 @@
             // 
             // cbendereco
             // 
+            this.cbendereco.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbendereco.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbendereco.DisplayMember = "endereco";
             this.cbendereco.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbendereco.FormattingEnabled = true;
@@ -549,6 +551,7 @@
             // 
             // cbbairro
             // 
+            this.cbbairro.DisplayMember = "bairro";
             this.cbbairro.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbairro.FormattingEnabled = true;
             this.cbbairro.Location = new System.Drawing.Point(33, 372);
@@ -560,6 +563,7 @@
             // 
             // cbcidade
             // 
+            this.cbcidade.DisplayMember = "cidade";
             this.cbcidade.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbcidade.FormattingEnabled = true;
             this.cbcidade.Location = new System.Drawing.Point(381, 372);

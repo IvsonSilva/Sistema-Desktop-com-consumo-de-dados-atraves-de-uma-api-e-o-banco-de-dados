@@ -15,6 +15,7 @@ using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Web;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 
 namespace WindowsFormsApp1
 {
@@ -28,6 +29,7 @@ namespace WindowsFormsApp1
         //variavel do tipo string pode ser usada e chamada depois
         //posso usar isso com outras coisas no código.
         string strcon = "Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password=";
+        string pastafotos = AppDomain.CurrentDomain.BaseDirectory + "/fotos/";
 
         private void label4_Click(object sender, EventArgs e)
         {
@@ -98,8 +100,11 @@ namespace WindowsFormsApp1
                     }
                     else
                     {
-                        //???
-                        cmd.CommandText = "UPDATE Clientes SET nome = ";
+                        //adicção de nome e valor com "WHERE id" + txtid.text; (indicando o campo especifico do banco de dados.
+                        //obrigatorio uso do WHERE nesse caso.
+                        cmd.CommandText = "UPDATE Clientes SET nome = @nome, documento = @documento, genero = @genero, rg = @rg, " +
+                            "estado_civil = @estado_civil, data_nascimento = @data_nascimento, cep = @cep, endereco = @endereco, " +
+                            "numero = @numero, bairro = @bairro, cidade = @cidade, estado = @estado, situacao = @situacao,WHERE id"+ txtid.Text;
                     }
 
                     cmd.Parameters.AddWithValue("@nome,", txtnome);
@@ -129,6 +134,7 @@ namespace WindowsFormsApp1
                     }
                     else
                     {
+                        //tratar esse erro falta código para o parametro adicionar depois
                         cmd.Parameters.AddWithValue("@data_nascimento", Convert.ToDateTime(txtnascimento.Text));
                         
                     }
@@ -440,7 +446,7 @@ namespace WindowsFormsApp1
 
             imgcliente.Image = Properties.Resources.avatar_2092113_6401;
 
-            File.Delete(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png");
+            File.Delete(pastafotos + "/fotos/" + txtid.Text + ".png");
 
             if (txtid.Text == "")
             {
@@ -448,7 +454,7 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png") == false)
+            if (File.Exists(pastafotos + "/fotos/" + txtid.Text + ".png") == false)
                 return;
             {
                 Funcoes.MsgErro("Não há Fotos para Remover!");
@@ -485,14 +491,27 @@ namespace WindowsFormsApp1
                 return;
             }
             
-            //chamando o data para incluir no parametro abaixo não é necessario agora....
+            //chamando o data para incluir no parametro abaixo....
             //DataTable dt = Funcoes.BuscaSql("SELECT endereco FROM clientes WHERE id" + txtid.Text);
 
 
-            //não é necessario agora....
-            /*txtnome.Text = dt.Rows[0]["nome"] ToString();
-            txtrg.Text = dt.Rows[0]["rg"] ToString();
-            txtrg.Text = dt.Rows[0]["rg"] ToString();*/
+            //utilizando as colunas do banco + função
+            /*txtnome.Text = dt.Rows[0]["nome"].ToString();
+            txtrg.Text = dt.Rows[0]["documento"].ToString();
+            txtrg.Text = dt.Rows[0]["genero"].ToString();
+            txtrg.Text = dt.Rows[0]["rg"].ToString();
+            txtrg.Text = dt.Rows[0]["estado_civil"].ToString();
+            txtrg.Text = dt.Rows[0]["data_nascimento"].ToString();
+            txtrg.Text = dt.Rows[0]["cep"].ToString();
+            txtrg.Text = dt.Rows[0]["endereco"].ToString();
+            txtrg.Text = dt.Rows[0]["numero"].ToString();
+            txtrg.Text = dt.Rows[0]["bairro"].ToString();
+            txtrg.Text = dt.Rows[0]["cidade"].ToString();
+            txtrg.Text = dt.Rows[0]["estado"].ToString();
+            txtrg.Text = dt.Rows[0]["celular"].ToString();
+            txtrg.Text = dt.Rows[0]["email"].ToString();
+            txtrg.Text = dt.Rows[0]["obs"].ToString();
+            txtrg.Text = dt.Rows[0]["situacao"].ToString();*/
         }
     }
  }
