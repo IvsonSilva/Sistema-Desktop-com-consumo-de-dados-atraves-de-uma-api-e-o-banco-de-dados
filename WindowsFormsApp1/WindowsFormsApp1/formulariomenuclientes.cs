@@ -71,7 +71,34 @@ namespace WindowsFormsApp1
                 }
                 //limpa seleção de linha do começo...
                 dglista.ClearSelection();
+
+                //bt apagado full time
+                bteditar.Enabled = false;
             }
+        }
+
+
+        //no click da celula liga
+        private void dglista_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            bteditar.Enabled = true;
+        }
+
+
+        // botão edição de lista do data
+        private void bteditar_Click(object sender, EventArgs e)
+        {
+            //chamando o formulario....
+            formularioclientes frm = new formularioclientes();
+            
+            /*pegando o Modifiers e trocando de private para public
+             * chamamos o campo ID da coluna junto com o datagrid e sua respectiva celula
+             * e convertemos a uma string para edição de cada celula
+             */
+            frm.txtid.Text = dglista.CurrentRow.Cells["idcoluna"].ToString();
+
+            frm.ShowDialog();
+
         }
     }
 }

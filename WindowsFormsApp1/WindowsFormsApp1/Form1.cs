@@ -98,7 +98,7 @@ namespace WindowsFormsApp1
                     }
                     else
                     {
-                        //
+                        //???
                         cmd.CommandText = "UPDATE Clientes SET nome = ";
                     }
 
@@ -465,8 +465,8 @@ namespace WindowsFormsApp1
             //acess
             //função mysql com controle endereço <>(diferente em sql) e ''(campo vazio ou "" em sql)
             //campo vazio e consultas do formulario ou registros....
-            /* cbendereco.DataSource = Funcoes.BuscaSql("SELECT DISTINCT endereço FROM clientes WHERE endereço <> '' ");
-             cbendereco.DisplayMember = "endereço";
+             cbendereco.DataSource = Funcoes.BuscaSql("SELECT DISTINCT endereco FROM clientes WHERE endereco <> '' ");
+             cbendereco.DisplayMember = "endereco";
              cbendereco.SelectedIndex = -1;
 
              cbcidade.DataSource = Funcoes.BuscaSql("SELECT DISTINCT cidade FROM clientes WHERE cidade <> '' ");
@@ -475,12 +475,12 @@ namespace WindowsFormsApp1
 
              cbbairro.DataSource = Funcoes.BuscaSql("SELECT DISTINCT bairro FROM clientes WHERE bairro <> '' ");
              cbbairro.DisplayMember = "bairro";
-             cbbairro.SelectedIndex = -1;*/
+             cbbairro.SelectedIndex = -1;
 
 
 
-
-            if (txtid.Text == "")
+            //2
+            if (string.IsNullOrEmpty(txtid.Text))
             {
                 return;
             }

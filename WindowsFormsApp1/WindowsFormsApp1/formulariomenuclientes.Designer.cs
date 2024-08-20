@@ -138,6 +138,7 @@
             this.bteditar.Size = new System.Drawing.Size(48, 48);
             this.bteditar.TabIndex = 1;
             this.bteditar.UseVisualStyleBackColor = false;
+            this.bteditar.Click += new System.EventHandler(this.bteditar_Click);
             // 
             // dglista
             // 
@@ -202,6 +203,7 @@
             this.dglista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dglista.Size = new System.Drawing.Size(1160, 461);
             this.dglista.TabIndex = 1;
+            this.dglista.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dglista_CellClick);
             this.dglista.Sorted += new System.EventHandler(this.dglista_Sorted);
             // 
             // idcoluna
