@@ -136,7 +136,7 @@ namespace WindowsFormsApp1
                     {
                         //tratar esse erro falta código para o parametro adicionar depois
                         cmd.Parameters.AddWithValue("@data_nascimento", Convert.ToDateTime(txtnascimento.Text));
-                        
+
                     }
                         
 
@@ -229,7 +229,7 @@ namespace WindowsFormsApp1
         //botão novo
         private void btnovo_Click(object sender, EventArgs e)
         {
-            if (Funcoes.Pergunta ("Deseja de Fato Limpar Todos os Campos?")== false)
+            if (Funcoes.Pergunta ("Deseja de Fato Limpar Todos os Campos?") == false)
                 return;
             
             //abaixo os campos que vão ser limpos!
@@ -385,8 +385,8 @@ namespace WindowsFormsApp1
 
         private void cbendereco_TextChanged(object sender, EventArgs e)
         {
-            //chamar as Funcoes
-            Funcoes.PriMaiuscula(cbendereco);
+            //verificar erro de sequencia sobre função em tratamento
+            //Funcoes.PriMaiuscula(cbendereco);
 
             
         }
@@ -398,13 +398,14 @@ namespace WindowsFormsApp1
 
         private void cbbairro_TextChanged(object sender, EventArgs e)
         {
-
-            Funcoes.PriMaiuscula(cbbairro);
+            //verificar erro de sequencia sobre função em tratamento
+            //Funcoes.PriMaiuscula(cbbairro);
         }
 
         private void cbcidade_TextChanged(object sender, EventArgs e)
         {
-            Funcoes.PriMaiuscula(cbcidade);
+            //verificar erro de sequencia sobre função em tratamento
+            //Funcoes.PriMaiuscula(cbcidade);
         }
 
         //botão imagem 2 clicks*
@@ -491,27 +492,71 @@ namespace WindowsFormsApp1
                 return;
             }
             
+            //
             //chamando o data para incluir no parametro abaixo....
-            //DataTable dt = Funcoes.BuscaSql("SELECT endereco FROM clientes WHERE id" + txtid.Text);
+            DataTable dt = Funcoes.BuscaSql("SELECT endereco FROM clientes WHERE id" + txtid.Text);
 
 
             //utilizando as colunas do banco + função
-            /*txtnome.Text = dt.Rows[0]["nome"].ToString();
-            txtrg.Text = dt.Rows[0]["documento"].ToString();
-            txtrg.Text = dt.Rows[0]["genero"].ToString();
+            txtnome.Text = dt.Rows[0]["nome"].ToString();
             txtrg.Text = dt.Rows[0]["rg"].ToString();
-            txtrg.Text = dt.Rows[0]["estado_civil"].ToString();
-            txtrg.Text = dt.Rows[0]["data_nascimento"].ToString();
-            txtrg.Text = dt.Rows[0]["cep"].ToString();
-            txtrg.Text = dt.Rows[0]["endereco"].ToString();
-            txtrg.Text = dt.Rows[0]["numero"].ToString();
-            txtrg.Text = dt.Rows[0]["bairro"].ToString();
-            txtrg.Text = dt.Rows[0]["cidade"].ToString();
-            txtrg.Text = dt.Rows[0]["estado"].ToString();
-            txtrg.Text = dt.Rows[0]["celular"].ToString();
-            txtrg.Text = dt.Rows[0]["email"].ToString();
-            txtrg.Text = dt.Rows[0]["obs"].ToString();
-            txtrg.Text = dt.Rows[0]["situacao"].ToString();*/
+            cbestadocivil.Text = dt.Rows[0]["estado_civil"].ToString();
+            txtnascimento.Text = dt.Rows[0]["data_nascimento"].ToString();
+            txtcep.Text = dt.Rows[0]["cep"].ToString();
+            cbendereco.Text = dt.Rows[0]["endereco"].ToString();
+            txtnumero.Text = dt.Rows[0]["numero"].ToString();
+            cbbairro.Text = dt.Rows[0]["bairro"].ToString();
+            cbcidade.Text = dt.Rows[0]["cidade"].ToString();
+            cbcidade.Text = dt.Rows[0]["estado"].ToString();
+            txtcelular.Text = dt.Rows[0]["celular"].ToString();
+            txtemail.Text = dt.Rows[0]["email"].ToString();
+            txtobs.Text = dt.Rows[0]["obs"].ToString();
+
+            //tratando do complemento em documento e genero
+            if(dt.Rows[0]["documento"].ToString().Length == 11)
+            {
+                cpf.Checked = true;
+            }
+            else
+            {
+                cnpj.Checked = true;
+            }
+            txtdoc.Text = dt.Rows[0]["documento"].ToString();
+
+            //ge
+              if(dt.Rows[0]["genero"].ToString() == "Masculino")
+            {
+                opm.Checked = true;
+            }
+              else if (dt.Rows[0]["genero"].ToString() == "Feminino") {
+                opf.Checked = true;
+            }
+            else
+            {
+                outros.Checked = true;
+            }
+
+            //sit
+            if(dt.Rows[0]["situacao"].ToString() == "Ativo")
+            {
+                cksituacao.Checked = true;
+            }
+            else
+            {
+                cksituacao.Checked = false;
+            }
+
+            //fotos verificação
+            if(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png"))
+            {
+                imgcliente.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png");
+            }
+            else
+            {
+                imgcliente.Image = Properties.Resources.avatar_2092113_6401;
+            }
+
+
         }
     }
  }

@@ -551,6 +551,8 @@
             // 
             // cbbairro
             // 
+            this.cbbairro.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbbairro.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbbairro.DisplayMember = "bairro";
             this.cbbairro.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbbairro.FormattingEnabled = true;
@@ -563,6 +565,8 @@
             // 
             // cbcidade
             // 
+            this.cbcidade.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cbcidade.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbcidade.DisplayMember = "cidade";
             this.cbcidade.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbcidade.FormattingEnabled = true;
