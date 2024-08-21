@@ -232,6 +232,7 @@
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black;
             this.nomecoluna.DefaultCellStyle = dataGridViewCellStyle4;
             this.nomecoluna.HeaderText = "Nome";
