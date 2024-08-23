@@ -16,6 +16,8 @@ using System.Globalization;
 using System.Web;
 using System.IO;
 using System.Runtime.Remoting.Messaging;
+using System.Text.RegularExpressions;
+using System.Runtime.ConstrainedExecution;
 
 namespace WindowsFormsApp1
 {
@@ -31,6 +33,8 @@ namespace WindowsFormsApp1
         string strcon = "Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password=";
         string pastafotos = AppDomain.CurrentDomain.BaseDirectory + "/fotos/";
 
+        string pattern = @"^\d{8}$";
+       
         private void label4_Click(object sender, EventArgs e)
         {
 
@@ -127,6 +131,8 @@ namespace WindowsFormsApp1
                     cmd.Parameters.AddWithValue("@estado_civil", cbestadocivil);
                     cmd.Parameters.AddWithValue("@data_nascimento", txtnascimento);
 
+
+                    //tratar o erro de data invalida!!!
                     if(txtnascimento.Text == "  /  /")
                     {
                         cmd.Parameters.AddWithValue("@data_nascimento", DBNull.Value);
@@ -168,7 +174,7 @@ namespace WindowsFormsApp1
                     }
                 }
   
-                MessageBox.Show("OK");
+                MessageBox.Show("TUDO OK!");
             
             }
 
@@ -313,7 +319,7 @@ namespace WindowsFormsApp1
             {
                 //usando a classinstanciada "Funcoes" + "MsgErro" já classificadas
                 Funcoes.MsgErro("Data de Nascimento Invalida!");
-
+                //e.Cancel = true;
             }
             
         }
@@ -353,20 +359,28 @@ namespace WindowsFormsApp1
 
 
         //no geral valida as informações incompletas do campo cep
+        //modificado usando metodo com string acima....
         private void txtcep_Validating(object sender, CancelEventArgs e)
         {
-            if(txtcep.Text.Replace("", "").Length == 0)
-                return;
-            if (txtcep.Text.Replace("","").Length < 8)
+            string cep = txtcep.Text.Replace("-", "");
+
+            if (string.IsNullOrWhiteSpace(cep))
             {
-                Funcoes.MsgErro("Informação Incompleta!");
+                Funcoes.MsgErro("CEP inválido! Digite os 8 dígitos corretamente.");
+                e.Cancel = true;
+                
+            }
+            if (!Regex.IsMatch(cep, pattern))
+            {
+                Funcoes.MsgErro("CEP inválido! Digite os 8 dígitos corretamente.");
                 e.Cancel = true;
             }
+
         }
 
 
-        //documento validação de campo vazio
-        private void txtdoc_Validating(object sender, CancelEventArgs e)
+//documento validação de campo vazio
+private void txtdoc_Validating(object sender, CancelEventArgs e)
         {
             if (txtdoc.Text == "")
                 return;
@@ -472,48 +486,36 @@ namespace WindowsFormsApp1
             //acess
             //função mysql com controle endereço <>(diferente em sql) e ''(campo vazio ou "" em sql)
             //campo vazio e consultas do formulario ou registros....
-             cbendereco.DataSource = Funcoes.BuscaSql("SELECT DISTINCT endereco FROM clientes WHERE endereco <> '' ");
-             cbendereco.DisplayMember = "endereco";
-             cbendereco.SelectedIndex = -1;
+            Funcoes.CarregarCombobox(cbendereco, "clientes", "endereco");
 
-             cbcidade.DataSource = Funcoes.BuscaSql("SELECT DISTINCT cidade FROM clientes WHERE cidade <> '' ");
-             cbcidade.DisplayMember = "cidade";
-             cbcidade.SelectedIndex = -1;
+            Funcoes.CarregarCombobox(cbbairro, "clientes", "bairro");
 
-             cbbairro.DataSource = Funcoes.BuscaSql("SELECT DISTINCT bairro FROM clientes WHERE bairro <> '' ");
-             cbbairro.DisplayMember = "bairro";
-             cbbairro.SelectedIndex = -1;
+            Funcoes.CarregarCombobox(cbcidade, "clientes", "cidade");
 
-
-
-            //2
-            if (string.IsNullOrEmpty(txtid.Text))
-            {
+            if (txtid.Text == "")
                 return;
-            }
-            
-            //
-            //chamando o data para incluir no parametro abaixo....
-            DataTable dt = Funcoes.BuscaSql("SELECT endereco FROM clientes WHERE id" + txtid.Text);
+           btsalvar.Text = "Atualizar";
 
+            //"SELECT * FROM Clientes WHERE id = " + TxtId.Text;
+            //+ txtid.Text
 
-            //utilizando as colunas do banco + função
+            DataTable dt = Funcoes.BuscaSql("SELECT * FROM clientes WHERE id = " + txtid.Text);
+
             txtnome.Text = dt.Rows[0]["nome"].ToString();
             txtrg.Text = dt.Rows[0]["rg"].ToString();
             cbestadocivil.Text = dt.Rows[0]["estado_civil"].ToString();
-            txtnascimento.Text = dt.Rows[0]["data_nascimento"].ToString();
+            txtnascimento.Text = dt.Rows[0]["nasc"].ToString();
             txtcep.Text = dt.Rows[0]["cep"].ToString();
             cbendereco.Text = dt.Rows[0]["endereco"].ToString();
             txtnumero.Text = dt.Rows[0]["numero"].ToString();
             cbbairro.Text = dt.Rows[0]["bairro"].ToString();
             cbcidade.Text = dt.Rows[0]["cidade"].ToString();
-            cbcidade.Text = dt.Rows[0]["estado"].ToString();
+            cbestado.Text = dt.Rows[0]["estado"].ToString();
             txtcelular.Text = dt.Rows[0]["celular"].ToString();
             txtemail.Text = dt.Rows[0]["email"].ToString();
             txtobs.Text = dt.Rows[0]["obs"].ToString();
 
-            //tratando do complemento em documento e genero
-            if(dt.Rows[0]["documento"].ToString().Length == 11)
+            if (dt.Rows[0]["documento"].ToString().Length == 11)
             {
                 cpf.Checked = true;
             }
@@ -521,14 +523,16 @@ namespace WindowsFormsApp1
             {
                 cnpj.Checked = true;
             }
+
             txtdoc.Text = dt.Rows[0]["documento"].ToString();
 
-            //ge
-              if(dt.Rows[0]["genero"].ToString() == "Masculino")
+
+            if (dt.Rows[0]["genero"].ToString() == "Masculino")
             {
                 opm.Checked = true;
             }
-              else if (dt.Rows[0]["genero"].ToString() == "Feminino") {
+            else if (dt.Rows[0]["genero"].ToString() == "Feminino")
+            {
                 opf.Checked = true;
             }
             else
@@ -536,8 +540,8 @@ namespace WindowsFormsApp1
                 outros.Checked = true;
             }
 
-            //sit
-            if(dt.Rows[0]["situacao"].ToString() == "Ativo")
+
+            if (dt.Rows[0]["situacao"].ToString() == "Ativo")
             {
                 cksituacao.Checked = true;
             }
@@ -546,17 +550,34 @@ namespace WindowsFormsApp1
                 cksituacao.Checked = false;
             }
 
-            //fotos verificação
-            if(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png"))
-            {
-                imgcliente.Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + "/fotos/" + txtid.Text + ".png");
-            }
-            else
+            //retirar acima
+
+
+
+
+
+
+           //ver isso aqui depois
+            /*if (dt.Rows[0]["foto"] == DBNull.Value)
             {
                 imgcliente.Image = Properties.Resources.avatar_2092113_6401;
             }
+            else
+            {
+                imgBytes = (byte[])dt.Rows[0]["foto"];
+                MemoryStream ms = new MemoryStream(imgBytes);
 
+                ImgCliente.Image = Image.FromStream(ms);
+            }*/
 
+            //if (File.Exists(PastaFotos + TxtId.Text + ".png"))
+            //{
+            //    ImgCliente.LoadAsync(PastaFotos + TxtId.Text + ".png");
+            //}
+            //else
+            //{
+            //    ImgCliente.Image = Properties.Resources.avatar;
+            //}
         }
     }
  }

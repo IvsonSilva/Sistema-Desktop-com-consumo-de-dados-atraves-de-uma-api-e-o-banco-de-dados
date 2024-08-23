@@ -5,6 +5,11 @@ using System.Windows.Forms;
 //datable
 using System.Data;
 using System.Runtime.Remoting.Messaging;
+using System.IO;
+using System;
+using System.Drawing;
+using System.Text.RegularExpressions;
+
 
 
 namespace WindowsFormsApp1
@@ -12,6 +17,9 @@ namespace WindowsFormsApp1
     //aqui escreva o codigo e depois cite ele em qualquer parametro para chamar ele no projeto em forma de função já com as instancias.
     internal class Funcoes
     {
+        //string referenciada a conexão
+        public static string strMySQL = "Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password=";
+
         //criando o primeiro alerta em mensagem com o "MsgErro" para parametro a ser citado no código
         public static void MsgErro(string Msg)
         {
@@ -81,33 +89,36 @@ namespace WindowsFormsApp1
 
 
         //função busca sql que retorna o datatable
-        public static DataTable BuscaSql (string ComandoSql)
+        public static  DataTable BuscaSql (string ComandoSql)
         {
             DataTable dt = new DataTable();
 
-            using (MySqlConnection conexao = new MySqlConnection("Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password="))
+            using (MySqlConnection Conexao = new MySqlConnection(Funcoes.strMySQL))
             {
-                conexao.Open();
+                Conexao.Open();
 
-                using (MySqlCommand cmd = conexao.CreateCommand())
+                using (MySqlCommand cmd = Conexao.CreateCommand())
                 {
                     cmd.CommandText = ComandoSql;
-
                     using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                     {
+                        //tratar o error
                         da.Fill(dt);
                     }
                 }
-
             }
             return dt;
         }
 
-
-        public static void CarregarCombobox()
+        //???? ver depois
+        public static void CarregarCombobox(ComboBox cb, string tabela, string campo)
         {
-
+            cb.DataSource = Funcoes.BuscaSql("SELECT DISTINCT " + campo + " FROM " + tabela + " WHERE " + campo + " <> '' ");
+            cb.DisplayMember = campo;
+            cb.SelectedIndex = -1;
         }
+
+
     }
 }
 
