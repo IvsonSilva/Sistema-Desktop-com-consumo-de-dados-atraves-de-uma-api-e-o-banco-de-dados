@@ -259,6 +259,7 @@
             // 
             // txtid
             // 
+            this.txtid.BackColor = System.Drawing.SystemColors.MenuBar;
             this.txtid.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtid.Location = new System.Drawing.Point(228, 86);
             this.txtid.Name = "txtid";

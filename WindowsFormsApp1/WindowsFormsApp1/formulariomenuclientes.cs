@@ -36,8 +36,9 @@ namespace WindowsFormsApp1
         //tabela
         private void formulariomenuclientes_Load(object sender, EventArgs e)
         {
+            buscarclientes();
             //chamando função
-            reorganizartabela();
+            //reorganizartabela();
         }
 
         //config tabela
@@ -50,7 +51,7 @@ namespace WindowsFormsApp1
         private void reorganizartabela()
         {
             //aqui chama os dados do jason
-            dglista.DataSource = Funcoes.BuscaSql("SELECT * FROM clientes");
+            //dglista.DataSource = Funcoes.BuscaSql("SELECT * FROM clientes");
         
             //marcar cancelados da lista
             foreach (DataGridViewRow lin in dglista.Rows)
@@ -81,7 +82,9 @@ namespace WindowsFormsApp1
         //no click da celula liga
         private void dglista_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            bteditar.Enabled = true;
+             bteditar.Enabled = true;
+
+
         }
 
 
@@ -99,6 +102,14 @@ namespace WindowsFormsApp1
 
             frm.ShowDialog();
 
+            buscarclientes();
+        }
+
+        private void buscarclientes()
+        {
+            dglista.DataSource = Funcoes.BuscaSql("SELECT * FROM clientes");
+
+            reorganizartabela();
         }
     }
 }
