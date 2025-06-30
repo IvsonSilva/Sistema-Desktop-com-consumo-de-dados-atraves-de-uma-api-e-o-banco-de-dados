@@ -1,5 +1,6 @@
  Aplicação se Baseia em um sistema simples com micro serviços e dados de terceiros consumindo atravez de uma api passado para o banco de dados ( qualquer banco de esolha adequada) e usado para consulta.
  
+
  
  
  
