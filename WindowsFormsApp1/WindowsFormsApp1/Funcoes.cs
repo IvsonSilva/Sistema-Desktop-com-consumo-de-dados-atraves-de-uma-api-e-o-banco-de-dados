@@ -1,4 +1,4 @@
-﻿//messagem box
+ip﻿//messagem box
 using MySql.Data.MySqlClient;
 using System.Globalization;
 using System.Windows.Forms;
@@ -18,7 +18,7 @@ namespace WindowsFormsApp1
     internal class Funcoes
     {
         //string referenciada a conexão
-        public static string strMySQL = "Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password=";
+        public static string strMySQL = "Server=seu ip;port=port;Database=base_clientes;User=root;Password=";
 
         //criando o primeiro alerta em mensagem com o "MsgErro" para parametro a ser citado no código
         public static void MsgErro(string Msg)
