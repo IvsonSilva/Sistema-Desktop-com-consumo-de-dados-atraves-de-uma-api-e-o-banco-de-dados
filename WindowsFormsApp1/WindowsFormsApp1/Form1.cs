@@ -30,7 +30,7 @@ namespace WindowsFormsApp1
         }
         //variavel do tipo string pode ser usada e chamada depois
         //posso usar isso com outras coisas no código.
-        string strcon = "Server=127.0.0.1;port=3306;Database=base_clientes;User=root;Password=";
+        string strcon = "Server=seu ip;port=porta;Database=base_clientes;User=root;Password=";
         string pastafotos = AppDomain.CurrentDomain.BaseDirectory + "/fotos/";
 
         string pattern = @"^\d{8}$";
