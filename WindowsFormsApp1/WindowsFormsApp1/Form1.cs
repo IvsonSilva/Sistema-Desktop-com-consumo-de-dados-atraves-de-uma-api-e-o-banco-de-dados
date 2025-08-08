@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 //messagem box
 using System.Windows.Forms;
 //conexão com banco de dados (tabela) mysql primeiro passo aqui! seguir o passo a passo do NuGet antes de usar essa biblioteca.
